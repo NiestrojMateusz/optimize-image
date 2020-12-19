@@ -1,0 +1,40 @@
+{
+	"name": "optimize-img",
+	"description": "Node CLI app to batch images optimization",
+	"version": "0.0.1",
+	"license": "MIT",
+	"bin": {
+		"optimize-img": "index.js"
+	},
+	"author": {
+		"name": "Mateusz Niestrój",
+		"email": "niestroj.mateusz@gmail.com",
+		"url": "https://github.com/NiestrojMateusz"
+	},
+	"keywords": [
+		"optimize-img",
+		"Mateusz Niestrój"
+	],
+	"files": [
+		"index.js",
+		"utils"
+	],
+	"scripts": {
+		"format": "prettier --write \"./**/*.{js,json}\""
+	},
+	"dependencies": {
+		"chalk": "^4.1.0",
+		"cli-alerts": "^1.2.2",
+		"cli-handle-error": "^4.4.0",
+		"cli-handle-unhandled": "^1.1.1",
+		"cli-meow-help": "^2.0.2",
+		"cli-welcome": "^2.2.2",
+		"enquirer": "^2.3.6",
+		"globby": "^11.0.1",
+		"jimp": "^0.16.1",
+		"meow": "^8.0.0"
+	},
+	"devDependencies": {
+		"prettier": "^2.2.1"
+	}
+}
