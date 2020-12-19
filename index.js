@@ -79,13 +79,10 @@ const { clear, debug, source, quality, output, extensions } = flags;
     await Promise.all(
       options.images.map(async imgPath => {
         const image = await Jimp.read(imgPath);
+        const outputPath = output ? `${output}/${imgPath}` : `${imgPath}`;
+        debug && log(outputPath);
         await image.quality(+options.quality);
-
-        if (output) {
-          await image.writeAsync(`${output}/${imgPath}`);
-        } else {
-          await image.writeAsync(`${imgPath}`);
-        }
+        await image.writeAsync(outputPath);
       })
     );
 
