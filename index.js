@@ -10,7 +10,7 @@
 const Jimp = require('jimp');
 const globby = require('globby');
 const alert = require('cli-alerts');
-
+const ora = require('ora');
 const init = require('./utils/init');
 const cli = require('./utils/cli');
 const log = require('./utils/log');
@@ -24,6 +24,7 @@ const { clear, debug, source, quality, output, extensions } = flags;
   init({ clear });
   input.includes(`help`) && cli.showHelp(0);
 
+  const spinner = ora('Optimizing');
   if (source) {
     if (!output) {
       const prompt = new Confirm({
@@ -48,6 +49,8 @@ const { clear, debug, source, quality, output, extensions } = flags;
         process.exit(0);
       }
     }
+
+    spinner.start();
     const allowedExtensions = ['png', 'jpg', 'gif', 'tiff', 'jpeg', 'bmp'];
     const filesExtensions = extensions
       ? extensions
@@ -76,11 +79,13 @@ const { clear, debug, source, quality, output, extensions } = flags;
       })
     );
 
+    spinner.stop();
     alert({
       type: `success`,
       msg: `Succesfuly optimized`
     });
   } else {
+    spinner.stop();
     alert({
       type: `error`,
       name: `No source error`,

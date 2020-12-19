@@ -32,7 +32,8 @@
     "enquirer": "^2.3.6",
     "globby": "^11.0.1",
     "jimp": "^0.16.1",
-    "meow": "^8.0.0"
+    "meow": "^8.0.0",
+    "ora": "^5.1.0"
   },
   "devDependencies": {
     "prettier": "^2.2.1"
