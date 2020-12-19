@@ -60,6 +60,16 @@ const { clear, debug, source, quality, output, extensions } = flags;
           .join('|')
       : allowedExtensions.join('|');
     const images = await globby([`${source}/*.(${filesExtensions})`]);
+
+    if (!images.length) {
+      spinner.stop();
+      alert({
+        type: `info`,
+        msg: `No images found`
+      });
+      process.exit(0);
+    }
+
     const options = {
       images,
       qulaity: quality ? +quality : 90,
