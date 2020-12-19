@@ -45,6 +45,7 @@ const { clear, debug, source, quality, output } = flags;
           name: `No overwrite`,
           msg: `You forgot to specify --output flag. No overwirte`
         });
+        process.exit(0);
       }
     }
 
@@ -60,9 +61,19 @@ const { clear, debug, source, quality, output } = flags;
       options.images.map(async imgPath => {
         const image = await Jimp.read(imgPath);
         await image.quality(+options.quality);
-        await image.writeAsync(`${output}/${imgPath}`);
+
+        if (output) {
+          await image.writeAsync(`${output}/${imgPath}`);
+        } else {
+          await image.writeAsync(`${imgPath}`);
+        }
       })
     );
+
+    alert({
+      type: `success`,
+      msg: `Succesfuly optimized`
+    });
   } else {
     alert({
       type: `error`,

@@ -5,7 +5,7 @@ const flags = {
   output: {
     type: 'string',
     alias: 'o',
-    desc: 'Path to output dir'
+    desc: 'Relative path to output dir'
   },
   source: {
     type: `string`,
