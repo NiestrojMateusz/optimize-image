@@ -2,6 +2,11 @@ const meow = require('meow');
 const meowHelp = require('cli-meow-help');
 
 const flags = {
+  extensions: {
+    type: 'string',
+    alias: 'e',
+    desc: 'Define extensions to match. Separated by comma'
+  },
   output: {
     type: 'string',
     alias: 'o',

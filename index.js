@@ -18,7 +18,7 @@ const { Confirm } = require('enquirer');
 
 const input = cli.input;
 const flags = cli.flags;
-const { clear, debug, source, quality, output } = flags;
+const { clear, debug, source, quality, output, extensions } = flags;
 
 (async () => {
   init({ clear });
@@ -48,9 +48,15 @@ const { clear, debug, source, quality, output } = flags;
         process.exit(0);
       }
     }
-
-    const images = await globby(source);
-
+    const allowedExtensions = ['png', 'jpg', 'gif', 'tiff', 'jpeg', 'bmp'];
+    const filesExtensions = extensions
+      ? extensions
+          .replace(' ', '')
+          .split(',')
+          .filter(ext => allowedExtensions.includes(ext))
+          .join('|')
+      : allowedExtensions.join('|');
+    const images = await globby([`${source}/*.(${filesExtensions})`]);
     const options = {
       images,
       qulaity: quality ? +quality : 90,
