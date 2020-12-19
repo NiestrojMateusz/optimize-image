@@ -2,6 +2,11 @@ const meow = require('meow');
 const meowHelp = require('cli-meow-help');
 
 const flags = {
+  oneFile: {
+    type: 'boolean',
+    alias: 'ol',
+    desc: 'optimize single file'
+  },
   extensions: {
     type: 'string',
     alias: 'e',

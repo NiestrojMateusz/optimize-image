@@ -18,7 +18,7 @@ const { Confirm } = require('enquirer');
 
 const input = cli.input;
 const flags = cli.flags;
-const { clear, debug, source, quality, output, extensions } = flags;
+const { clear, debug, source, quality, output, extensions, oneFile } = flags;
 
 (async () => {
   init({ clear });
@@ -59,7 +59,12 @@ const { clear, debug, source, quality, output, extensions } = flags;
           .filter(ext => allowedExtensions.includes(ext))
           .join('|')
       : allowedExtensions.join('|');
-    const images = await globby([`${source}/*.(${filesExtensions})`]);
+    let images;
+    if (oneFile) {
+      images = await globby(source);
+    } else {
+      images = await globby([`${source}/*.(${filesExtensions})`]);
+    }
 
     if (!images.length) {
       spinner.stop();
@@ -76,11 +81,11 @@ const { clear, debug, source, quality, output, extensions } = flags;
       output
     };
 
+    let count = 0;
     await Promise.all(
       options.images.map(async imgPath => {
         const image = await Jimp.read(imgPath);
         const outputPath = output ? `${output}/${imgPath}` : `${imgPath}`;
-        debug && log(outputPath);
         await image.quality(+options.quality);
         await image.writeAsync(outputPath);
       })
@@ -89,7 +94,7 @@ const { clear, debug, source, quality, output, extensions } = flags;
     spinner.stop();
     alert({
       type: `success`,
-      msg: `Succesfuly optimized`
+      msg: `Succesfuly optimized ${count} images`
     });
   } else {
     spinner.stop();
