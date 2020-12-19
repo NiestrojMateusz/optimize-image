@@ -69,7 +69,7 @@ library/vendors/composer
 assets/img/.DS_Store
 
 # VSCode related files #
-# .vscode
+.vscode
 
 # Custom ignore
 test/
