@@ -1,4 +1,4 @@
-> 🗃 Optimize bmp, gif, jpeg, png, &amp; images in Node.js.
+> 🗃 Optimize bmp, jpg, png, &amp; images in Node.js.
 
 ## Usage
 

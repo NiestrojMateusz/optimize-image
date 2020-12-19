@@ -51,7 +51,7 @@ const { clear, debug, source, quality, output, extensions, oneFile } = flags;
     }
 
     spinner.start();
-    const allowedExtensions = ['png', 'jpg', 'gif', 'tiff', 'jpeg', 'bmp'];
+    const allowedExtensions = ['png', 'jpg', 'tiff', 'jpeg', 'bmp'];
     const filesExtensions = extensions
       ? extensions
           .replace(' ', '')
@@ -82,12 +82,18 @@ const { clear, debug, source, quality, output, extensions, oneFile } = flags;
     };
 
     let count = 0;
-    await Promise.all(
+    let omitted = await Promise.all(
       options.images.map(async imgPath => {
-        const image = await Jimp.read(imgPath);
-        const outputPath = output ? `${output}/${imgPath}` : `${imgPath}`;
-        await image.quality(+options.quality);
-        await image.writeAsync(outputPath);
+        try {
+          const image = await Jimp.read(imgPath);
+          const outputPath = output ? `${output}/${imgPath}` : `${imgPath}`;
+          await image.quality(+options.quality);
+          await image.writeAsync(outputPath);
+          count++;
+        } catch (error) {
+          console.log(imgPath);
+          return null;
+        }
       })
     );
 
